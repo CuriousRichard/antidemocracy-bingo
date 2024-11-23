@@ -3,8 +3,8 @@
 \usepackage{xstring}
 
 \newcommand{\randomwords}{%
-;14Aother;dogma;TipLine%
-;10A;7A;6A;4A;5A;8A;9A;15A;1Aother;22ATermLimit;Enemies;ConcentrationCamp;FCCLicense;Emergency;NationalDefense;MissingPerson;Bribery;Suspicious Death;OvertCorruption;GenevaConvention;Nepotism;MilitarySuppression;RevokeCitizenship}
+;14A other;Dogma;Tip Line%
+;10A;7A;6A;4A;5A;8A;9A;15A;1A;22A Term Limit;Enemies;Concentration Camp;FCC License;Emergency;National Defense;Missing Person;Bribery;Suspicious Death;Overt Corruption;Geneva Convention;Nepotism;Military Suppression;Revoke Citizenship}
 
 
 \pgfmathsetmacro{\cellsize}{3.3}
@@ -30,7 +30,6 @@
           \StrBetween[\myrandom,\mynextrandom]{\randomwords}{;}{;}[\randomword]
           \StrDel{\randomwords}{\randomword;}[\randomwords]
           \xdef\randomwords{\randomwords}
-            %\node at ({(\x+0.5)*\cellsize},{(\y+0.5)*\cellsize}) {\myrandom-\maxvalue-\randomword};
             \node at ({(\x+0.5)*\cellsize},{(\y+0.5)*\cellsize}) {\randomword};
         }
     }
