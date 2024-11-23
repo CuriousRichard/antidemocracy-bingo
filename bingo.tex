@@ -1,0 +1,39 @@
+\documentclass[tikz,border=2mm]{standalone}
+\usepackage{xifthen}
+\usepackage{xstring}
+
+\newcommand{\randomwords}{%
+;14Aother;dogma;TipLine%
+;10A;7A;6A;4A;5A;8A;9A;15A;1Aother;22ATermLimit;Enemies;ConcentrationCamp;FCCLicense;Emergency;NationalDefense;MissingPerson;Bribery;Suspicious Death;OvertCorruption;GenevaConvention;Nepotism;MilitarySuppression;RevokeCitizenship}
+
+
+\pgfmathsetmacro{\cellsize}{3.3}
+\pgfmathtruncatemacro{\gridsize}{5}
+
+\pgfmathtruncatemacro{\fieldcount}{\gridsize*\gridsize-1}
+\pgfmathtruncatemacro{\bingo}{\fieldcount/2}
+\StrCount{\randomwords}{;}[\numwords]
+
+\begin{document}
+
+\begin{tikzpicture}
+    \foreach \f in {0,...,\fieldcount}
+    { \pgfmathtruncatemacro{\x}{mod(\f,\gridsize)}
+        \pgfmathtruncatemacro{\y}{div(\f,\gridsize)}
+        \draw ({\x*\cellsize},{\y*\cellsize}) rectangle ({(\x+1)*\cellsize},{(\y+1)*\cellsize});
+        \ifthenelse{\f=\bingo}
+        {   \node at ({(\x+0.5)*\cellsize},{(\y+0.5)*\cellsize}) {14A Jan 6};
+        }
+        {   \pgfmathtruncatemacro{\maxvalue}{\numwords-1-\f)}
+          \pgfmathtruncatemacro{\myrandom}{random(\maxvalue)}
+          \pgfmathtruncatemacro{\mynextrandom}{\myrandom+1}
+          \StrBetween[\myrandom,\mynextrandom]{\randomwords}{;}{;}[\randomword]
+          \StrDel{\randomwords}{\randomword;}[\randomwords]
+          \xdef\randomwords{\randomwords}
+            %\node at ({(\x+0.5)*\cellsize},{(\y+0.5)*\cellsize}) {\myrandom-\maxvalue-\randomword};
+            \node at ({(\x+0.5)*\cellsize},{(\y+0.5)*\cellsize}) {\randomword};
+        }
+    }
+\end{tikzpicture}
+
+\end{document}
